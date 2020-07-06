@@ -17,8 +17,8 @@ Events belongs_to daily logs
 
 ✓ Set up repository
 
-Set up folders
-	-Front end
+✓ Set up folders
+	✓ Front end
 	✓ Back end
 
 Resource:
