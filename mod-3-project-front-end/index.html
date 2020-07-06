@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <title>Dan and Steven's Mod 3 Project</title>
+            <link rel="stylesheet" href="styles.css">
+        </head>
+        <body>
+            <header><h1>Welcome to the project!</h1></header>
+            <main>
+                <button id="daily-log-generator">How are you feeling?</button><br><br>
+                <form id="daily-log-form" style="display:none">
+                    <label for="event">What Happened?</label><br>
+                   <!-- <input name="event" type="text" style="width:450px; height:250px"> -->
+                    <textarea name="event" rows="20" cols="60" placeholder="Tell your story here..."></textarea><br>
+                    <label for="emotion">How did this make you feel?</label>
+                    <select name="emotion" id="emotion">
+                        <option value="joy">Joy!</option>
+                        <option value="sadness">Sadness...</option>
+                        <option value="anger">Anger!</option>
+                        <option value="disgust">Disgust</option>
+                        <option value="fear">Fear...</option>
+                        <option value="surprise">Surprise!</option>
+                    </select><br>
+                    <input type="submit">
+                </form>
+            </main>
+            <script defer src="index.js"></script>
+        </body>
+</html>
