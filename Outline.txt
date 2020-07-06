@@ -14,6 +14,7 @@ belongs_to user
 
 Events belongs_to daily logs
 
+User ------< Daily-logs ------< Events
 
 ✓ Set up repository
 
@@ -24,7 +25,7 @@ Events belongs_to daily logs
 Resource:
 	Daily log:
 		Front end-
-			Generate button to create form
+			✓ Generate button to create form
 			Generate card to display log
 		Back end-
 			Daily log model
