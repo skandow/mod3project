@@ -1,0 +1,48 @@
+User Stories:
+
+As a user I can:
+	-Create a new daily log
+	-Read both my current and previous daily logs
+	-Update my daily log with new events
+	-Delete daily logs or events from the current day
+
+Models:
+User has_many daily_logs
+
+Daily_logs has_many events
+belongs_to user
+
+Events belongs_to daily logs
+
+
+Set up repository
+
+Set up folders
+	-Front end
+	-Back end
+
+Resource:
+	Daily log:
+		Front end-
+			Generate button to create form
+			Generate card to display log
+		Back end-
+			Daily log model
+			Daily log controller
+			Daily log serializer
+
+	Events:
+		Front end-
+			Generate form
+		Back end-
+			Event model
+			Event controller
+			Event serializer
+
+	User:
+		Front end-
+			Generate login
+		Back end-
+			Event model
+			Event controller
+			Event serializer
