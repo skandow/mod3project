@@ -16,13 +16,20 @@ function fetchEvents() {
 }
 
 function renderEvents(events) {
-    console.log(events.data)
     events.data.forEach(event => {
         renderEvent(event)
     })
     const deleteButtons = document.getElementsByClassName("delete")
     for (let i=0; i<deleteButtons.length; i++) {
         deleteButtons[i].addEventListener("click", deleteEvent)
+    }
+    const editButtons = document.getElementsByClassName("edit")
+    for (let i=0; i<editButtons.length; i++) {
+        editButtons[i].addEventListener("click", toggleEditForm)
+    }
+    const editForms = document.getElementsByClassName("edit-event-form")
+    for (let i=0; i<editForms.length; i++) {
+        editForms[i].addEventListener("submit", submitEditedEvent)
     }
 }
 
@@ -37,6 +44,16 @@ function toggleForm() {
         newForm.style.display = "none";
     }
 })
+}
+
+function toggleEditForm(event) {
+    const id = event.target.parentNode.id
+    const editForm = document.getElementById(`edit-${id}`)
+    if (editForm.style.display === "none") {
+        editForm.style.display = "block"
+    } else {
+        editForm.style.display = "none"
+    }
 }
 
 function submitEvent(event) {
@@ -61,12 +78,54 @@ function submitEvent(event) {
     .then(data => renderEvent(data.data))
 }
 
+function submitEditedEvent(event) {
+    event.preventDefault();
+    const content = event.target.event.value 
+    const emotion = event.target.emotion.value
+    const payload = {
+        content: content,
+        emotion: emotion
+    }
+    event.target.reset();
+    const reqObj = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(payload)
+    }
+    fetch(`http://localhost:3000/events/${event.target.dataset.eventId}`, reqObj)
+    .then(resp => resp.json())
+    .then(data => renderEditedEventData(data, event.target))
+}
+
 function renderEvent(data) {
     const eventList = document.getElementById("today-events")
     eventList.innerHTML += `<li id=${data.id}><hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
     Emotion: ${data.attributes.emotion}<br>
     <button class="edit">Edit</button>
-    <button class="delete">Delete</li><br<br><br>`
+    <button class="delete">Delete</li><br>
+    <form style="display:none" data-event-id="${data.id}" id="edit-${data.id}" class="edit-event-form">
+    <label for="event">What Happened?</label><br>
+    <textarea name="event" rows="20" cols="60">${data.attributes.content}</textarea><br>
+    <label for="emotion">What emotion did you experience?</label>
+    <select name="emotion" id="emotion">
+        <option value="joy">Joy!</option>
+        <option value="sadness">Sadness...</option>
+        <option value="anger">Anger!</option>
+        <option value="disgust">Disgust</option>
+        <option value="fear">Fear...</option>
+        <option value="surprise">Surprise!</option>
+    </select><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>`
+}
+
+function renderEditedEventData(data, eventTarget) {
+    console.log(data)
+    console.log(eventTarget)
+    eventTarget.innerHTML = 
 }
 
 function deleteEvent(event) {
