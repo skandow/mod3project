@@ -20,7 +20,7 @@ belongs_to user
 
 Events belongs_to daily logs
 
-User ------< Daily-logs ------< Events
+User ------< DailyLogs ------< Events
 
 ✓ Set up repository
 
@@ -53,5 +53,3 @@ Resource:
 			Event model
 			Event controller
 			Event serializer
-
-A change
