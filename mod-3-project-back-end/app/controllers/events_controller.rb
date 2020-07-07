@@ -9,6 +9,12 @@ class EventsController < ApplicationController
         render json: EventSerializer.new(new_event)
     end 
 
+    def update 
+        event = Event.find(params[:id])
+        event.update(content: params[:content], emotion: params[:emotion])
+        render json: EventSerializer.new(event)
+    end 
+
     def destroy 
         event = Event.find(params[:id])
         event.delete 
