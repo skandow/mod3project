@@ -1,4 +1,5 @@
 let displayForm = false;
+const makeButtonsWork = [workDeleteButtons, workEditButtons, workEditForms]
 
 document.addEventListener("DOMContentLoaded", renderPage)
 
@@ -19,18 +20,34 @@ function renderEvents(events) {
     events.data.forEach(event => {
         renderEvent(event)
     })
+    renderButtons();  
+}
+
+function workDeleteButtons() {
     const deleteButtons = document.getElementsByClassName("delete")
     for (let i=0; i<deleteButtons.length; i++) {
         deleteButtons[i].addEventListener("click", deleteEvent)
     }
+}
+
+function workEditButtons() {
     const editButtons = document.getElementsByClassName("edit")
     for (let i=0; i<editButtons.length; i++) {
         editButtons[i].addEventListener("click", toggleEditForm)
     }
+}
+
+function workEditForms() {
     const editForms = document.getElementsByClassName("edit-event-form")
     for (let i=0; i<editForms.length; i++) {
         editForms[i].addEventListener("submit", submitEditedEvent)
     }
+}
+
+function renderButtons() {
+    makeButtonsWork.forEach(index => {
+        index();
+    })
 }
 
 function toggleForm() {
@@ -97,7 +114,7 @@ function submitEditedEvent(event) {
     }
     fetch(`http://localhost:3000/events/${event.target.dataset.eventId}`, reqObj)
     .then(resp => resp.json())
-    .then(data => renderEditedEventData(data, event.target))
+    .then(data => renderEditedEventData(data.data, event.target))
 }
 
 function renderEvent(data) {
@@ -105,7 +122,7 @@ function renderEvent(data) {
     eventList.innerHTML += `<li id=${data.id}><hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
     Emotion: ${data.attributes.emotion}<br>
     <button class="edit">Edit</button>
-    <button class="delete">Delete</li><br>
+    <button class="delete">Delete</button>
     <form style="display:none" data-event-id="${data.id}" id="edit-${data.id}" class="edit-event-form">
     <label for="event">What Happened?</label><br>
     <textarea name="event" rows="20" cols="60">${data.attributes.content}</textarea><br>
@@ -118,14 +135,31 @@ function renderEvent(data) {
         <option value="fear">Fear...</option>
         <option value="surprise">Surprise!</option>
     </select><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>`
+    <input type="submit">
+    </form><br><br></li>`;
+    renderButtons();
 }
 
 function renderEditedEventData(data, eventTarget) {
-    console.log(data)
-    console.log(eventTarget)
-    eventTarget.innerHTML = 
+    eventTarget.parentNode.innerHTML = `<hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
+    Emotion: ${data.attributes.emotion}<br>
+    <button class="edit">Edit</button>
+    <button class="delete">Delete</button>
+    <form style="display:none" data-event-id="${data.id}" id="edit-${data.id}" class="edit-event-form">
+    <label for="event">What Happened?</label><br>
+    <textarea name="event" rows="20" cols="60">${data.attributes.content}</textarea><br>
+    <label for="emotion">What emotion did you experience?</label>
+    <select name="emotion" id="emotion">
+        <option value="joy">Joy!</option>
+        <option value="sadness">Sadness...</option>
+        <option value="anger">Anger!</option>
+        <option value="disgust">Disgust</option>
+        <option value="fear">Fear...</option>
+        <option value="surprise">Surprise!</option>
+    </select><br>
+    <input type="submit" class="btn btn-primary"></input>
+    </form><br><br>`
+    renderButtons();
 }
 
 function deleteEvent(event) {
