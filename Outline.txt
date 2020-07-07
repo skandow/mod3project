@@ -1,3 +1,9 @@
+This SPA will allow users to create daily logs of events and connect 
+those events to a particular emotion they experienced during or as a 
+result of said event. This allows the user to track their emotional 
+journey throughout a particular day.  Users can also view logs from 
+previous days and can edit or delete events during a particular day.
+
 User Stories:
 
 As a user I can:
