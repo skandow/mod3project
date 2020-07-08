@@ -4,8 +4,9 @@ const makeButtonsWork = [workDeleteButtons, workEditButtons, workEditForms]
 document.addEventListener("DOMContentLoaded", renderPage)
 
 function renderPage() {
+    createDailyLog();
     fetchEvents();
-    toggleForm();
+    // toggleForm();
     const form = document.getElementById("daily-log-form")
     form.addEventListener("submit", submitEvent)
 }
@@ -20,7 +21,7 @@ function renderEvents(events) {
     events.data.forEach(event => {
         renderEvent(event)
     })
-    renderButtons();  
+    renderButtons();
 }
 
 function workDeleteButtons() {
@@ -50,6 +51,38 @@ function renderButtons() {
     })
 }
 
+function createDailyLog() {
+  const logButton = document.getElementById("create-daily-log")
+  logButton.addEventListener("click", postDailyLog)
+}
+
+function postDailyLog() {
+  const reqObj = {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+      }
+      // body: JSON.stringify(payload)
+  }
+  fetch("http://localhost:3000/daily_logs", reqObj)
+  .then(resp => resp.json())
+  .then(data => renderDailyLog(data.data))
+}
+
+function renderDailyLog(data) {
+  const logDate = document.getElementById("daily-log-title")
+  const logButton = document.getElementById("create-daily-log")
+  const generatorButton = document.getElementById("daily-log-generator")
+  const logTodayShow = document.getElementById("log-today")
+  logDate.innerHTML = data.attributes.title
+  logDate.style.display = "block";
+  logButton.style.display = "none";
+  generatorButton.style.display = "block";
+  logTodayShow.style.display = "block";
+  toggleForm()
+}
+
 function toggleForm() {
     const logButton = document.getElementById("daily-log-generator")
     const newForm = document.getElementById("daily-log-form")
@@ -75,7 +108,7 @@ function toggleEditForm(event) {
 
 function submitEvent(event) {
     event.preventDefault();
-    const content = event.target.event.value 
+    const content = event.target.event.value
     const emotion = event.target.emotion.value
     const payload = {
         content: content,
@@ -97,7 +130,7 @@ function submitEvent(event) {
 
 function submitEditedEvent(event) {
     event.preventDefault();
-    const content = event.target.event.value 
+    const content = event.target.event.value
     const emotion = event.target.emotion.value
     const payload = {
         content: content,
@@ -163,10 +196,9 @@ function renderEditedEventData(data, eventTarget) {
 }
 
 function deleteEvent(event) {
-    const id = event.target.parentNode.id 
-    const url = "http://localhost:3000/events" + "/" + id 
+    const id = event.target.parentNode.id
+    const url = "http://localhost:3000/events" + "/" + id
     fetch(url, {method: "DELETE"})
     .then(resp => resp.json())
     .then(json => event.target.parentNode.remove())
 }
-
