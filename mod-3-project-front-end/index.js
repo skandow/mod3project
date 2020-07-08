@@ -7,8 +7,33 @@ function renderPage() {
     createDailyLog();
     fetchDailyLogs();
     // toggleForm();
+    const saveButton = document.getElementById("complete-log")
     const form = document.getElementById("daily-log-form")
     form.addEventListener("submit", submitEvent)
+    saveButton.addEventListener("click", saveDailyLog)
+}
+
+function saveDailyLog(event) {
+  const logID = event.target.previousElementSibling.previousElementSibling.previousElementSibling.dataset.logId
+  const url = `http://localhost:3000/daily_logs/${logID}`
+  const dailyLogBox = document.getElementById("daily-log-box")
+  const ulToClear = document.getElementById("today-events")
+  const newCreateButton = document.getElementById("create-daily-log")
+  const reqObj = {
+      method: "PATCH",
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+      },
+      body: JSON.stringify({status: "complete"})
+  }
+  dailyLogBox.style.display = "none";
+  ulToClear.innerHTML = `Today's Log:<br><br>`
+  newCreateButton.style.display = "block"
+  fetch(url, reqObj)
+  .then(resp => resp.json())
+  .then(data => renderPage())
+
 }
 
 function fetchDailyLogs() {
@@ -25,14 +50,17 @@ function renderDailyLogs(dailylogs) {
         logButton.disabled = "true"
         renderDailyLog(lastDailyLog)
         renderEvents(lastDailyLog.attributes.events)
+    } else {
+      const dailyLogForm = document.getElementById("daily-log-form")
+      dailyLogForm.style.display = "none";
     }
     renderOldLogs(dailylogs)
 }
 
 function renderOldLogs(dailylogs) {
-    console.log(dailylogs)
     const completeLogs = dailylogs.filter(log => log.attributes.status === "complete")
     const oldLogsSection = document.getElementById("old-logs")
+    oldLogsSection.innerHTML = "";
     completeLogs.forEach(log => {
         const eventsText = renderOldEvents(log.attributes.events)
         oldLogsSection.innerHTML += `<div id=card-for-${log.id}>
@@ -134,7 +162,7 @@ function toggleForm() {
     } else {
         newForm.style.display = "none";
     }
-})
+  })
 }
 
 function toggleEditForm(event) {
