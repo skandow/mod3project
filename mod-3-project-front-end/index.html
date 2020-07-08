@@ -9,7 +9,8 @@
             <header><h1>Welcome to the project!</h1></header>
             <main>
                 <button id="create-daily-log">Create Daily Log?</button>
-                <h2 id="daily-log-title" style="display:none"></h2>
+                <div id="daily-log-box" style="display:none">
+                <h2 id="daily-log-title"></h2>
                 <button id="daily-log-generator" style="display:none">How are you feeling?</button><br><br>
                 <form id="daily-log-form" style="display:none">
                     <label for="event">What Happened?</label><br>
@@ -29,6 +30,9 @@
                     <ul id="today-events" style="list-style-type:none">Today's Log:<br><br>
                     </ul>
                 </div>
+                <button id="complete-log">Save and End This Log</button>
+                </div>
+                <div id="old-logs"></div>
             </main>
             <script defer src="index.js"></script>
         </body>

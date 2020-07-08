@@ -5,20 +5,59 @@ document.addEventListener("DOMContentLoaded", renderPage)
 
 function renderPage() {
     createDailyLog();
-    fetchEvents();
+    fetchDailyLogs();
     // toggleForm();
     const form = document.getElementById("daily-log-form")
     form.addEventListener("submit", submitEvent)
 }
 
-function fetchEvents() {
-    fetch("http://localhost:3000/events")
+function fetchDailyLogs() {
+    fetch("http://localhost:3000/daily_logs")
     .then(resp => resp.json())
-    .then(events => renderEvents(events))
+    .then(dailylogs => renderDailyLogs(dailylogs.data))
+}
+
+function renderDailyLogs(dailylogs) {
+    const lastDailyLog = dailylogs[dailylogs.length - 1]
+    if (lastDailyLog.attributes.status === "current") {
+        const logButton = document.getElementById("create-daily-log")
+        logButton.style.display = "none"
+        logButton.disabled = "true"
+        renderDailyLog(lastDailyLog)
+        renderEvents(lastDailyLog.attributes.events)
+    }
+    renderOldLogs(dailylogs)
+}
+
+function renderOldLogs(dailylogs) {
+    console.log(dailylogs)
+    const completeLogs = dailylogs.filter(log => log.attributes.status === "complete")
+    const oldLogsSection = document.getElementById("old-logs")
+    completeLogs.forEach(log => {
+        const eventsText = renderOldEvents(log.attributes.events)
+        oldLogsSection.innerHTML += `<div id=card-for-${log.id}>
+        <h3>Log for ${log.attributes.title}:</h3>
+        ${eventsText}
+        </div>`
+    })
+}
+
+function renderOldEvents(events) {
+    let eventString = `<ul style="list-style-type:none">`
+    events.forEach(event => {
+        eventString += renderOldEvent(event)
+    })
+    eventString += `</ul>`
+    return eventString
+}
+
+function renderOldEvent(event) {
+    return `<li id=${event.id}><hr style="width:25%;margin-left:0">Event: ${event.content}<br>
+    Emotion: ${event.emotion}</li>`
 }
 
 function renderEvents(events) {
-    events.data.forEach(event => {
+    events.forEach(event => {
         renderEvent(event)
     })
     renderButtons();
@@ -75,11 +114,13 @@ function renderDailyLog(data) {
   const logButton = document.getElementById("create-daily-log")
   const generatorButton = document.getElementById("daily-log-generator")
   const logTodayShow = document.getElementById("log-today")
-  logDate.innerHTML = data.attributes.title
-  logDate.style.display = "block";
+  logDate.innerHTML = `Daily Log for ${data.attributes.title}`
+  document.getElementById("daily-log-box").style.display = "block";
   logButton.style.display = "none";
   generatorButton.style.display = "block";
   logTodayShow.style.display = "block";
+  const newForm = document.getElementById("daily-log-form")
+  newForm.setAttribute("data-log-id", `${data.id}`)
   toggleForm()
 }
 
@@ -110,9 +151,11 @@ function submitEvent(event) {
     event.preventDefault();
     const content = event.target.event.value
     const emotion = event.target.emotion.value
+    const logId = parseInt(event.target.dataset.logId)
     const payload = {
         content: content,
-        emotion: emotion
+        emotion: emotion,
+        daily_log_id: logId
     }
     event.target.reset();
     const reqObj = {
@@ -125,7 +168,7 @@ function submitEvent(event) {
     }
     fetch("http://localhost:3000/events", reqObj)
     .then(resp => resp.json())
-    .then(data => renderEvent(data.data))
+    .then(data => renderNewEvent(data.data))
 }
 
 function submitEditedEvent(event) {
@@ -151,6 +194,29 @@ function submitEditedEvent(event) {
 }
 
 function renderEvent(data) {
+    const eventList = document.getElementById("today-events")
+    eventList.innerHTML += `<li id=${data.id}><hr style="width:25%;margin-left:0">Event: ${data.content}<br>
+    Emotion: ${data.emotion}<br>
+    <button class="edit">Edit</button>
+    <button class="delete">Delete</button>
+    <form style="display:none" data-event-id="${data.id}" id="edit-${data.id}" class="edit-event-form">
+    <label for="event">What Happened?</label><br>
+    <textarea name="event" rows="20" cols="60">${data.content}</textarea><br>
+    <label for="emotion">What emotion did you experience?</label>
+    <select name="emotion" id="emotion">
+        <option value="joy">Joy!</option>
+        <option value="sadness">Sadness...</option>
+        <option value="anger">Anger!</option>
+        <option value="disgust">Disgust</option>
+        <option value="fear">Fear...</option>
+        <option value="surprise">Surprise!</option>
+    </select><br>
+    <input type="submit">
+    </form><br><br></li>`;
+    renderButtons();
+}
+
+function renderNewEvent(data) {
     const eventList = document.getElementById("today-events")
     eventList.innerHTML += `<li id=${data.id}><hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
     Emotion: ${data.attributes.emotion}<br>
