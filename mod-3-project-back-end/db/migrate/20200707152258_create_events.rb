@@ -3,6 +3,7 @@ class CreateEvents < ActiveRecord::Migration[6.0]
     create_table :events do |t|
       t.string :content
       t.string :emotion
+      t.integer :daily_log_id
 
       t.timestamps
     end
