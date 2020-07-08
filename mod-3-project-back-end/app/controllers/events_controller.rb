@@ -1,24 +1,24 @@
 class EventsController < ApplicationController
-    def index 
-        events = Event.all 
+    def index
+        events = Event.all
         render json: EventSerializer.new(events)
     end
-    
-    def create 
-        new_event = Event.create(content: params[:content], emotion: params[:emotion])
-        render json: EventSerializer.new(new_event)
-    end 
 
-    def update 
+    def create
+        new_event = Event.create(content: params[:content], emotion: params[:emotion], daily_log_id: 2)
+        render json: EventSerializer.new(new_event)
+    end
+
+    def update
         event = Event.find(params[:id])
         event.update(content: params[:content], emotion: params[:emotion])
         render json: EventSerializer.new(event)
-    end 
+    end
 
-    def destroy 
+    def destroy
         event = Event.find(params[:id])
-        event.delete 
+        event.delete
 
         render json: EventSerializer.new(event)
-    end 
+    end
 end
