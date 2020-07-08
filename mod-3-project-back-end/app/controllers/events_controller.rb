@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     end
 
     def create
-        new_event = Event.create(content: params[:content], emotion: params[:emotion], daily_log_id: 2)
+        new_event = Event.create(content: params[:content], emotion: params[:emotion], daily_log_id: params[:daily_log_id])
         render json: EventSerializer.new(new_event)
     end
 
