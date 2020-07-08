@@ -5,7 +5,7 @@ class DailyLogsController < ApplicationController
     end
 
     def create 
-        daily_log = DailyLog.create(status: "current")
+        daily_log = DailyLog.create(status: "current", title: Time.now.strftime("%A, %B %d, %Y"))
         render json: DailyLogSerializer.new(daily_log)
     end 
 
