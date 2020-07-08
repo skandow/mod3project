@@ -29,7 +29,7 @@ function saveDailyLog(event) {
   }
   dailyLogBox.style.display = "none";
   ulToClear.innerHTML = `Today's Log:<br><br>`
-  newCreateButton.style.display = "block"
+  newCreateButton.style.display = "block";
   fetch(url, reqObj)
   .then(resp => resp.json())
   .then(data => renderPage())
