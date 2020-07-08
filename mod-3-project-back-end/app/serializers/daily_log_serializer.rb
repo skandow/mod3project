@@ -1,4 +1,4 @@
 class DailyLogSerializer
     include FastJsonapi::ObjectSerializer
-    attributes :status, :created_at, :events
+    attributes :status, :title, :events
 end 

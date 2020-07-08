@@ -10,8 +10,8 @@ Event.delete_all
 ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'daily_logs'")
 ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'events'")
 
-firstLog = DailyLog.create(status: "complete")
-secondLog = DailyLog.create(status: "current")
+firstLog = DailyLog.create(status: "complete", title: "Tuesday, July 7, 2020")
+secondLog = DailyLog.create(status: "current", title: "Wednesday, July 8, 2020")
 
 event1 = Event.create(content: "We began seeding the data.", emotion: "joy", daily_log_id: 1)
 event2 = Event.create(content: "There was a problem seeding the data.", emotion: "surprise", daily_log_id: 1)

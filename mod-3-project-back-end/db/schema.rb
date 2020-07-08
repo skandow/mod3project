@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2020_07_07_233508) do
 
   create_table "daily_logs", force: :cascade do |t|
     t.string "status"
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
