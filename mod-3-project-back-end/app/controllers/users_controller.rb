@@ -1,21 +1,28 @@
 class UsersController < ApplicationController
 
-    def search 
+    def search
         if params[:username]
             user = User.find_by(username: params[:username])
         elsif params[:logged_in]
             user = User.find_by(logged_in: true)
         end
-        if !user 
+        if !user && !params[:username]
             render json: "No user logged in"
-        else 
-            redirect_to user_path(user)
-        end 
-    end 
+        elsif !user && !!params[:username]
+          user = User.create(username: params[:username], logged_in: true)
+          redirect_to user_path(user)
+        else
+          redirect_to user_path(user)
+        end
+    end
+
+    # def create
+    #   redirect_to user_path(user)
+    # end
 
     def show
         user = User.find(params[:id])
-        user.update(logged_in: true) 
+        user.update(logged_in: true)
         options = {include: [:daily_logs]}
         render json: UserSerializer.new(user, options)
     end
@@ -26,6 +33,6 @@ class UsersController < ApplicationController
         p params
         user.update(logged_in: false)
         render json: UserSerializer.new(user)
-    end 
+    end
 
 end
