@@ -120,7 +120,25 @@ function renderButtons() {
 
 function createDailyLog() {
   const logButton = document.getElementById("create-daily-log")
-  logButton.addEventListener("click", postDailyLog)
+  logButton.addEventListener("click", grabDailyLogs)
+}
+
+function grabDailyLogs() {
+   fetch("http://localhost:3000/daily_logs")
+  .then(resp => resp.json())
+  .then(data => checkDailyLogs(data.data))
+}
+
+function checkDailyLogs(data) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+    const today = new Date()
+    const compareDate = today.toLocaleDateString("en-US", options)
+    if (compareDate === data[data.length - 1].attributes.title) {
+        const greeting = document.querySelector("header")
+        greeting.innerHTML += `<hr><p style="color:red">You have already submitted a log for today.</p>`
+    } else {
+        postDailyLog()
+    }
 }
 
 function postDailyLog() {
