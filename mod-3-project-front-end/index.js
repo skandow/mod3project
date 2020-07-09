@@ -80,7 +80,7 @@ function renderOldEvents(events) {
 }
 
 function renderOldEvent(event) {
-    return `<li id=${event.id} class="${event.emotion}"><hr style="width:25%;margin-left:0">Event: ${event.content}<br>
+    return `<li id=${event.id} class="${event.emotion}"  style="width:50%;">Event: ${event.content}<br>
     Emotion: ${event.emotion}</li>`
 }
 
@@ -223,7 +223,7 @@ function submitEditedEvent(event) {
 
 function renderEvent(data) {
     const eventList = document.getElementById("today-events")
-    eventList.innerHTML += `<li class="${data.emotion}" id=${data.id}><hr style="width:25%;margin-left:0">Event: ${data.content}<br>
+    eventList.innerHTML += `<li class="${data.emotion}" id=${data.id} style="width:50%;">Event: ${data.content}<br>
     Emotion: ${data.emotion}<br>
     <button class="edit">Edit</button>
     <button class="delete">Delete</button>
@@ -246,7 +246,7 @@ function renderEvent(data) {
 
 function renderNewEvent(data) {
     const eventList = document.getElementById("today-events")
-    eventList.innerHTML += `<li id=${data.id} class="${data.attributes.emotion}"><hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
+    eventList.innerHTML += `<li id=${data.id} class="${data.attributes.emotion}" style="width:50%";>Event: ${data.attributes.content}<br>
     Emotion: ${data.attributes.emotion}<br>
     <button class="edit">Edit</button>
     <button class="delete">Delete</button>

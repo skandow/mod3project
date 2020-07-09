@@ -1,23 +1,117 @@
+li {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+header h1{
+  text-align: center;
+}
+
+#daily-log-box #daily-log-generator {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#daily-log-box #daily-log-title {
+  text-align: center;
+}
+
+/* ul #todays-events {
+  text-align: center;
+} */
+
+#old-logs h3 {
+  text-align: center;
+}
+
+#old-logs li {
+  list-style-position: inside;
+}
+
 .joy {
-    color: gold
+  border: 2px solid gold;
+  border-radius: 30px;
+  text-align: center;
+  color: gold
+}
+.joy:hover{
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: gold;
 }
 
 .sadness {
-    color: blue
+  border: 2px solid blue;
+  border-radius: 30px;
+  text-align: center;
+  color: blue
+}
+.sadness:hover{
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: blue;
 }
 
 .anger {
-    color: red
+  border: 2px solid red;
+  border-radius: 30px;
+  text-align: center;
+  color: red;
+}
+.anger:hover{
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: red;
 }
 
 .disgust {
-    color: green
+  border: 2px solid green;
+  border-radius: 30px;
+  text-align: center;
+  color: green
+}
+.disgust:hover{
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: green;
 }
 
 .fear {
-    color: purple
+  border: 2px solid purple;
+  border-radius: 30px;
+  text-align: center;
+  color: purple
+}
+.fear:hover{
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: purple;
 }
 
 .surprise {
-    color: orange
+  border: 2px solid orange;
+  border-radius: 30px;
+  text-align: center;
+  color: orange;
+}
+.surprise:hover {
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  transition-property: color, background-color;
+  transition-duration: .3s;
+  transition-timing-function: ease-in;
+  color: white;
+  background-color: orange;
 }
