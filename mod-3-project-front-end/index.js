@@ -57,17 +57,46 @@ function renderDailyLogs(dailylogs) {
     renderOldLogs(dailylogs)
 }
 
+function showMenu() {
+  document.getElementById("past-logs-list").classList.toggle("show")
+  if (event.target.textContent === "Open Previous Daily Log Menu") {
+    event.target.textContent = "Close Previous Daily Log Menu"
+  } else {
+    event.target.textContent = "Open Previous Daily Log Menu"
+  }
+}
+
 function renderOldLogs(dailylogs) {
     const completeLogs = dailylogs.filter(log => log.attributes.status === "complete")
     const oldLogsSection = document.getElementById("old-logs")
+    const dropDown = document.getElementById("past-logs-list")
     oldLogsSection.innerHTML = "";
     completeLogs.forEach(log => {
         const eventsText = renderOldEvents(log.attributes.events)
-        oldLogsSection.innerHTML += `<div id=card-for-${log.id}>
+        oldLogsSection.innerHTML += `<div class="old-log-card" id=card-for-${log.id} style="display:none">
         <h3>Log for ${log.attributes.title}:</h3>
         ${eventsText}
         </div>`
+        dropDown.innerHTML += `<p class="drop-down-option" data-log-id="card-for-${log.id}">${log.attributes.title}</p>`
     })
+  addDropDownEvent()
+}
+
+function addDropDownEvent(){
+  const dropDowns = document.getElementsByClassName("drop-down-option")
+  for (i=0; i<dropDowns.length; i++) {
+    dropDowns[i].addEventListener("click", showLogCard)
+  }
+}
+
+function showLogCard(event) {
+  const cards = document.getElementsByClassName("old-log-card")
+  const cardID = event.target.dataset.logId
+  const card = document.getElementById(cardID)
+  for (i=0; i<cards.length; i++) {
+    cards[i].style.display = "none"
+  }
+  card.style.display = "block"
 }
 
 function renderOldEvents(events) {
@@ -80,7 +109,7 @@ function renderOldEvents(events) {
 }
 
 function renderOldEvent(event) {
-    return `<li id=${event.id} class="${event.emotion}"  style="width:50%;">Event: ${event.content}<br>
+    return `<li id=${event.id} class="${event.emotion}"  >Event: ${event.content}<br>
     Emotion: ${event.emotion}</li>`
 }
 
@@ -241,7 +270,7 @@ function submitEditedEvent(event) {
 
 function renderEvent(data) {
     const eventList = document.getElementById("today-events")
-    eventList.innerHTML += `<li class="${data.emotion}" id=${data.id} style="width:50%;">Event: ${data.content}<br>
+    eventList.innerHTML += `<li class="${data.emotion}" id=${data.id} >Event: ${data.content}<br>
     Emotion: ${data.emotion}<br>
     <button class="edit">Edit</button>
     <button class="delete">Delete</button>

@@ -26,15 +26,19 @@
                     </select><br>
                     <input type="submit">
                 </form>
-                <div id="log-today" style="display:none">
+                <div class="log-today-card" id="log-today" style="display:none">
                     <ul id="today-events" style="list-style-type:none">Today's Log:<br><br>
                     </ul>
                 </div>
-                <hr>
                 <button id="complete-log">Save and End This Log</button>
                 </div>
             </main>
             <footer>
+                <div class="drop-down">
+                  <button id="drop-down-button" onclick="showMenu()">Open Previous Daily Log Menu</button>
+                  <div class="drop-down-content" id="past-logs-list">
+                  </div>
+                </div>
                 <div id="old-logs"></div>
             </footer>
             <script defer src="index.js"></script>
