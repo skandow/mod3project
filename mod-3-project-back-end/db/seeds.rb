@@ -5,20 +5,30 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+User.delete_all
 DailyLog.delete_all
 Event.delete_all
+
+ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'users'")
 ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'daily_logs'")
 ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'events'")
 
-
-dates_array = []
-date = Date.today - 20
-while date != Date.today
-    dates_array << date.strftime("%A, %B %-d, %Y")
-    date += 1 
+25.times do 
+    User.create(username: Faker::Name.name, logged_in: false)
 end 
-dates_array.each do |date|
-    DailyLog.create(status: "complete", title: date)
+
+User.all.each do |user|
+    dates_array = []
+    date = Date.today - 20
+    while date != Date.today
+        dates_array << date.strftime("%A, %B %-d, %Y")
+        date += 1 
+    end 
+    dates_array.each do |date|
+        DailyLog.create(status: "complete", title: date, user_id: user.id)
+    end
 end  
 
 
@@ -29,7 +39,7 @@ end
 EVENTS = ["I almost got hit by a bicycle", "I went to the store", "My favorite team lost", "I saw a movie", "I visited with my parents", "I played some video games", "I wrote some code", "I ate at a restaurant"]
 EMOTIONS = ["joy", "sadness", "anger", "disgust", "fear", "surprise"]
 
-100.times do 
+500.times do 
     Event.create(content: EVENTS.sample, emotion: EMOTIONS.sample, daily_log_id: DailyLog.all.sample.id)
 end
 # event1 = Event.create(content: "We began seeding the data.", emotion: "joy", daily_log_id: 1)

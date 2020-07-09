@@ -6,8 +6,14 @@
             <link rel="stylesheet" href="styles.css">
         </head>
         <body>
-            <header><h1 id="greeting">Welcome to Feelings Friday Everyday!</h1></header>
-            <main>
+            <header><h1 id="greeting">Welcome to Feelings Friday Everyday!</h1>
+            <form id="log-in">
+                <label for="username">User Name:</label>
+                <input type="text" name="username">
+                <input type="submit">
+            </form>
+            </header>
+            <main id="main" style="display:none">
                 <button id="create-daily-log">Create Daily Log?</button>
                 <div id="daily-log-box" style="display:none">
                 <h2 id="daily-log-title"></h2>
@@ -33,7 +39,7 @@
                 <button id="complete-log">Save and End This Log</button>
                 </div>
             </main>
-            <footer>
+            <footer id="footer" style="display:none">
                 <div class="drop-down">
                   <button id="drop-down-button" onclick="showMenu()">Open Previous Daily Log Menu</button>
                   <div class="drop-down-content" id="past-logs-list">
