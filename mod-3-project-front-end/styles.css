@@ -1,3 +1,8 @@
+body {
+  background: rgb(2,0,36);
+  background: linear-gradient(270deg, rgba(2,0,36,0) 0%, rgba(255,214,202,64) 100%);
+}
+
 li {
   margin-left: auto;
   margin-right: auto;
@@ -16,7 +21,7 @@ header h1{
   text-align: center;
 }
 
-ul #today-events {
+#today-events {
   text-align: center;
 }
 
@@ -43,10 +48,10 @@ ul #today-events {
 }
 
 .sadness {
-  border: 2px solid blue;
+  border: 2px solid lightskyblue;
   border-radius: 30px;
   text-align: center;
-  color: blue
+  color: lightskyblue;
 }
 .sadness:hover{
   transition-property: color, background-color;
