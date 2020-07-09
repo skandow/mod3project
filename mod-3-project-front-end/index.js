@@ -5,12 +5,47 @@ document.addEventListener("DOMContentLoaded", renderPage)
 
 function renderPage() {
     userLogInEventSetter();
+    userLogOutEventSetter()
     createDailyLog();
     // toggleForm();
     const saveButton = document.getElementById("complete-log")
     const form = document.getElementById("daily-log-form")
     form.addEventListener("submit", submitEvent)
     saveButton.addEventListener("click", saveDailyLog)
+    searchForLoggedInUser()
+}
+
+function userLogOutEventSetter() {
+    const logOut = document.getElementById("log-out")
+    logOut.addEventListener("click", logOutNow)
+}
+
+function logOutNow() {
+    const userId = document.getElementById("create-daily-log").dataset.userId
+    const payload = {logged_in: false}
+    const reqObj = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    }
+    fetch(`http://localhost:3000/users/${userId}`, reqObj)
+    .then(resp => resp.json())
+    .then(json => location.reload())
+}
+
+function searchForLoggedInUser() {
+    const payload = {logged_in: true}
+    const reqObj = {method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)}
+    fetch("http://localhost:3000/users/search", reqObj)
+    .then(resp => resp.json())
+    .then(data => sortUserData(data))
+    .catch(resp => console.log("No users are logged in."))
 }
 
 function userLogInEventSetter() {
@@ -38,6 +73,7 @@ function sortUserData(data) {
     greeting.textContent = `Welcome back, ${name}!`
     const buttonToCreateLog = document.getElementById("create-daily-log")
     buttonToCreateLog.setAttribute("data-user-id", data.data.id)
+    document.getElementById("log-out").style.display = "block"
     const logsArray = data.included
     renderDailyLogs(logsArray)
 }
