@@ -4,8 +4,8 @@ const makeButtonsWork = [workDeleteButtons, workEditButtons, workEditForms]
 document.addEventListener("DOMContentLoaded", renderPage)
 
 function renderPage() {
+    userLogInEventSetter();
     createDailyLog();
-    fetchDailyLogs();
     // toggleForm();
     const saveButton = document.getElementById("complete-log")
     const form = document.getElementById("daily-log-form")
@@ -13,8 +13,37 @@ function renderPage() {
     saveButton.addEventListener("click", saveDailyLog)
 }
 
+function userLogInEventSetter() {
+    const logIn = document.getElementById("log-in")
+    logIn.addEventListener("submit", findUser)
+}
+
+function findUser(event) {
+    event.preventDefault();
+    const userName = event.target[0].value
+    const payload = {username: userName}
+    const reqObj = {method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)}
+    fetch("http://localhost:3000/users/search", reqObj)
+    .then(resp => resp.json())
+    .then(data => sortUserData(data))
+}
+
+function sortUserData(data) {
+    const name = data.data.attributes.username 
+    const greeting = document.getElementById("greeting")
+    greeting.textContent = `Welcome back, ${name}!`
+    const buttonToCreateLog = document.getElementById("create-daily-log")
+    buttonToCreateLog.setAttribute("data-user-id", data.data.id)
+    const logsArray = data.included
+    renderDailyLogs(logsArray)
+}
+
 function saveDailyLog(event) {
-  const logID = event.target.previousElementSibling.previousElementSibling.previousElementSibling.dataset.logId
+  const logID = event.target.previousElementSibling.previousElementSibling.dataset.logId
   const url = `http://localhost:3000/daily_logs/${logID}`
   const dailyLogBox = document.getElementById("daily-log-box")
   const ulToClear = document.getElementById("today-events")
@@ -32,14 +61,20 @@ function saveDailyLog(event) {
   newCreateButton.style.display = "block";
   fetch(url, reqObj)
   .then(resp => resp.json())
-  .then(data => renderPage())
-
+  .then(data => seekUser())
 }
 
-function fetchDailyLogs() {
-    fetch("http://localhost:3000/daily_logs")
+function seekUser() {
+    const userId = document.getElementById("create-daily-log").dataset.userId
+    fetch(`http://localhost:3000/users/${userId}`)
     .then(resp => resp.json())
-    .then(dailylogs => renderDailyLogs(dailylogs.data))
+    .then(data => sortUserData(data))
+}
+
+function fetchDailyLogs(dailyLog) {
+    fetch(`http://localhost:3000/daily_logs/${dailyLog.id}`)
+    .then(resp => resp.json())
+    .then(dailylog => console.log(dailylog.data))
 }
 
 function renderDailyLogs(dailylogs) {
@@ -79,6 +114,9 @@ function renderOldLogs(dailylogs) {
         </div>`
         dropDown.innerHTML += `<p class="drop-down-option" data-log-id="card-for-${log.id}">${log.attributes.title}</p>`
     })
+    document.getElementById("main").style.display = "block"
+    document.getElementById("footer").style.display = "block"
+    document.getElementById("log-in").style.display = "none"
   addDropDownEvent()
 }
 
@@ -153,12 +191,13 @@ function createDailyLog() {
 }
 
 function grabDailyLogs() {
-   fetch("http://localhost:3000/daily_logs")
+    const userId = (event.target.dataset.userId)
+   fetch(`http://localhost:3000/users/${userId}`)
   .then(resp => resp.json())
-  .then(data => checkDailyLogs(data.data))
+  .then(data => checkDailyLogs(data.included, data.data.id))
 }
 
-function checkDailyLogs(data) {
+function checkDailyLogs(data, id) {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
     const today = new Date()
     const compareDate = today.toLocaleDateString("en-US", options)
@@ -166,18 +205,19 @@ function checkDailyLogs(data) {
         const greeting = document.querySelector("header")
         greeting.innerHTML += `<hr><p style="color:red">You have already submitted a log for today.</p>`
     } else {
-        postDailyLog()
+        postDailyLog(id)
     }
 }
 
-function postDailyLog() {
+function postDailyLog(id) { 
+  const userId = parseInt(id)
   const reqObj = {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
-      }
-      // body: JSON.stringify(payload)
+      },
+        body: JSON.stringify({user_id: userId})
   }
   fetch("http://localhost:3000/daily_logs", reqObj)
   .then(resp => resp.json())
