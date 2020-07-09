@@ -16,10 +16,6 @@ class UsersController < ApplicationController
         end
     end
 
-    # def create
-    #   redirect_to user_path(user)
-    # end
-
     def show
         user = User.find(params[:id])
         user.update(logged_in: true)
@@ -29,8 +25,6 @@ class UsersController < ApplicationController
 
     def update
         user = User.find(params[:id])
-        p "******************************"
-        p params
         user.update(logged_in: false)
         render json: UserSerializer.new(user)
     end
