@@ -70,12 +70,20 @@ function findUser(event) {
 function sortUserData(data) {
     const name = data.data.attributes.username
     const greeting = document.getElementById("greeting")
-    greeting.textContent = `Welcome back, ${name}!`
+    greeting.textContent = `Welcome, ${name}!`
     const buttonToCreateLog = document.getElementById("create-daily-log")
     buttonToCreateLog.setAttribute("data-user-id", data.data.id)
     document.getElementById("log-out").style.display = "block"
     const logsArray = data.included
+    console.log(logsArray)
+    if (logsArray.length !== 0) {
     renderDailyLogs(logsArray)
+    } else {
+    document.getElementById("main").style.display = "block"
+    document.getElementById("footer").style.display = "block"
+    document.getElementById("log-in").style.display = "none"
+    document.getElementById("prompt").style.display = "none"
+    }
 }
 
 function saveDailyLog(event) {
@@ -153,6 +161,7 @@ function renderOldLogs(dailylogs) {
     document.getElementById("main").style.display = "block"
     document.getElementById("footer").style.display = "block"
     document.getElementById("log-in").style.display = "none"
+    document.getElementById("prompt").style.display = "none"
   addDropDownEvent()
 }
 
@@ -241,12 +250,16 @@ function checkDailyLogs(data, id) {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
     const today = new Date()
     const compareDate = today.toLocaleDateString("en-US", options)
+    if (data.length !== 0) {
     if (compareDate === data[data.length - 1].attributes.title) {
         const greeting = document.querySelector("header")
         greeting.innerHTML += `<hr><p style="color:red">You have already submitted a log for today.</p>`
     } else {
         postDailyLog(id)
-    }
+    } 
+}   else {
+    postDailyLog(id)
+}
 }
 
 function postDailyLog(id) {
