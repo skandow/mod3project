@@ -14,7 +14,7 @@ ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 
 dates_array = []
 date = Date.today - 20
 while date != Date.today
-    dates_array << date.strftime("%A, %B %d, %Y")
+    dates_array << date.strftime("%A, %B %-d, %Y")
     date += 1 
 end 
 dates_array.each do |date|
