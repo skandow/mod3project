@@ -68,7 +68,7 @@ function findUser(event) {
 }
 
 function sortUserData(data) {
-    const name = data.data.attributes.username 
+    const name = data.data.attributes.username
     const greeting = document.getElementById("greeting")
     greeting.textContent = `Welcome back, ${name}!`
     const buttonToCreateLog = document.getElementById("create-daily-log")
@@ -175,11 +175,15 @@ function showLogCard(event) {
 
 function renderOldEvents(events) {
     let eventString = `<ul style="list-style-type:none">`
-    events.forEach(event => {
-        eventString += renderOldEvent(event)
-    })
-    eventString += `</ul>`
-    return eventString
+    if ( events.length === 0 ) {
+      eventString += `<li class="no-emotion">☠️You felt no emotion today.☠️</li>`
+    } else {
+      events.forEach(event => {
+          eventString += renderOldEvent(event)
+      })
+    }
+  eventString += `</ul>`
+  return eventString
 }
 
 function renderOldEvent(event) {
@@ -245,7 +249,7 @@ function checkDailyLogs(data, id) {
     }
 }
 
-function postDailyLog(id) { 
+function postDailyLog(id) {
   const userId = parseInt(id)
   const reqObj = {
       method: "POST",
