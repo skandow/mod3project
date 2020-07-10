@@ -194,6 +194,8 @@ textarea[name="event"] {
   border-radius: 10px;
   padding-right: 20px;
   background: ghostwhite;
+  margin-top: 5px;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
 .drop-down #drop-down-button {
@@ -323,6 +325,7 @@ textarea[name="event"] {
   border: 2px solid black;
   border-radius: 10px;
   background: ghostwhite;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
 /* .drop-down {
@@ -331,11 +334,14 @@ textarea[name="event"] {
 } */
 
 .drop-down-content {
-  border: 2px solid black;
+  /* border: 2px solid transparent; */
   border-radius: 10px;
   display: none;
   position: absolute;
-  background: ghostwhite;
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,214,202,0.6398168103448276) 100%);
+  margin-top: 5px;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
 .show {
@@ -348,7 +354,7 @@ textarea[name="event"] {
   min-width: 250px;
   min-height: 25px;
   text-align: center;
-  border: 2px solid black;
+  border: 2px solid transparent;
   border-radius: 10px;
 }
 
@@ -356,8 +362,8 @@ textarea[name="event"] {
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
-  color: white;
-  background-color: powderblue;
+  color: gray;
+  background-color: #b8f3f5;
 }
 
 .no-emotion {
