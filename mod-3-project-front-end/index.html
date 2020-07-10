@@ -17,6 +17,7 @@
             </header>
             <main id="main" style="display:none">
                 <button id="create-daily-log">Create Daily Log?</button>
+                
                 <div id="daily-log-box" style="display:none">
                 <h2 id="daily-log-title"></h2>
                 <button id="daily-log-generator" style="display:none">How are you feeling?</button><br><br>
@@ -35,7 +36,8 @@
                     <input type="submit">
                 </form>
                 <div class="log-today-card" id="log-today" style="display:none">
-                    <ul id="today-events" style="list-style-type:none">Today's Log:<br><br>
+                    <h2>Today's Log:</h2>
+                    <ul id="today-events" style="list-style-type:none"><br><br>
                     </ul>
                 </div>
                 <button id="complete-log">Save and End This Log</button>
@@ -47,8 +49,12 @@
                   <div class="drop-down-content" id="past-logs-list">
                   </div>
                 </div>
-                <div id="old-logs"></div>
-                <div id="analytics"></div>
+                <span id="analytics">
+                    <h2>Data:</h2>
+                    <ul id="data" style="list-style-type:none"><br><br>
+                    </ul>
+                </span>
+                <span id="old-logs"></span>
             </footer>
             <script defer src="index.js"></script>
         </body>

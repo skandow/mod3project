@@ -187,6 +187,15 @@ textarea[name="event"] {
   list-style-position: inside;
 }
 
+#analytics {
+  float: right;
+  min-width: 280px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding-right: 20px;
+  background: ghostwhite;
+}
+
 .drop-down #drop-down-button {
   display: block;
   margin-left: auto;
@@ -218,13 +227,13 @@ textarea[name="event"] {
   transform: translateY(3px);
 }
 
-.joy {
+.joy, #joy {
   border: 2px solid gold;
   border-radius: 30px;
   text-align: center;
   color: gold
 }
-.joy:hover{
+.joy:hover, #joy:hover{
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
@@ -232,13 +241,13 @@ textarea[name="event"] {
   background-color: gold;
 }
 
-.sadness {
+.sadness, #sadness {
   border: 2px solid lightskyblue;
   border-radius: 30px;
   text-align: center;
   color: lightskyblue;
 }
-.sadness:hover{
+.sadness:hover, #sadness:hover{
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
@@ -246,13 +255,13 @@ textarea[name="event"] {
   background-color: blue;
 }
 
-.anger {
+.anger, #anger {
   border: 2px solid red;
   border-radius: 30px;
   text-align: center;
   color: red;
 }
-.anger:hover{
+.anger:hover, #anger:hover{
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
@@ -260,13 +269,13 @@ textarea[name="event"] {
   background-color: red;
 }
 
-.disgust {
+.disgust, #disgust {
   border: 2px solid green;
   border-radius: 30px;
   text-align: center;
   color: green
 }
-.disgust:hover{
+.disgust:hover, #disgust:hover {
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
@@ -274,13 +283,13 @@ textarea[name="event"] {
   background-color: green;
 }
 
-.fear {
+.fear, #fear {
   border: 2px solid purple;
   border-radius: 30px;
   text-align: center;
   color: purple
 }
-.fear:hover{
+.fear:hover, #fear:hover{
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
@@ -288,13 +297,13 @@ textarea[name="event"] {
   background-color: purple;
 }
 
-.surprise {
+.surprise, #surprise {
   border: 2px solid orange;
   border-radius: 30px;
   text-align: center;
   color: orange;
 }
-.surprise:hover {
+.surprise:hover, #surprise:hover {
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -309,7 +318,7 @@ textarea[name="event"] {
 .old-log-card {
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 40%;
   padding-right: 35px;
   border: 2px solid black;
   border-radius: 10px;
