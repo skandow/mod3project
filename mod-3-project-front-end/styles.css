@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "BigShouldersInline";
+  src: url("../BigShouldersInline-DisplayBlack.ttf");
+}
+
+@font-face {
+  font-family: "BigShouldersLite";
+  src: url("../BigShouldersInline-TextLight.ttf");
+}
+
+body, main, footer {
+  font-family: BigShouldersLite;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 body {
   background: rgb(255,255,255);
   background: linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(255,214,202,0.6398168103448276) 100%);
@@ -21,7 +37,9 @@ header h1, h2, p {
 }
 
 #greeting {
-  font-family: copperplate;
+  font-family: BigShouldersInline;
+  font-size: 75px;
+  color: powderblue;
 }
 
 #log-in {
@@ -42,10 +60,10 @@ header h1, h2, p {
   margin-top: 5px;
   margin-bottom: 5px;
   height: 40px;
-  border-color: blue;
+  border-color: #83b5f8;
   border-radius: 30px;
-  background-color: lightskyblue;
-  color: blue;
+  background-color: powderblue;
+  color: #83b5f8;
   font-weight: bold;
 }
 
@@ -53,9 +71,9 @@ header h1, h2, p {
   transition-property: color, background-color, border-color, box-shadow, transform;
   transition-duration: .2s;
   transition-timing-function: ease-in;
-  color: lightskyblue;
-  background-color: blue;
-  border-color: lightskyblue;
+  color: powderblue;
+  background-color: #83b5f8;
+  border-color: powderblue;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   transform: translateY(-2px);
 }
@@ -73,10 +91,10 @@ header h1, h2, p {
   margin-top: 5px;
   margin-bottom: 5px;
   height: 40px;
-  border-color: blue;
+  border-color: #83b5f8;
   border-radius: 30px;
-  background-color: lightskyblue;
-  color: blue;
+  background-color: powderblue;
+  color: #83b5f8;
   font-weight: bold;
 }
 
@@ -84,9 +102,9 @@ header h1, h2, p {
   transition-property: color, background-color, border-color, box-shadow, transform;
   transition-duration: .2s;
   transition-timing-function: ease-in;
-  color: lightskyblue;
-  background-color: blue;
-  border-color: lightskyblue;
+  color: powderblue;
+  background-color: #83b5f8;
+  border-color: powderblue;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   transform: translateY(-2px);
 }
@@ -116,10 +134,10 @@ textarea[name="event"] {
   margin-right: auto;
   margin-bottom: 5px;
   height: 40px;
-  border-color: blue;
+  border-color: #83b5f8;
   border-radius: 30px;
-  background-color: lightskyblue;
-  color: blue;
+  background-color: powderblue;
+  color: #83b5f8;
   font-weight: bold;
 }
 
@@ -127,9 +145,9 @@ textarea[name="event"] {
   transition-property: color, background-color, border-color, box-shadow, transform;
   transition-duration: .2s;
   transition-timing-function: ease-in;
-  color: lightskyblue;
-  background-color: blue;
-  border-color: lightskyblue;
+  color: powderblue;
+  background-color: #83b5f8;
+  border-color: powderblue;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   transform: translateY(-2px);
 }
@@ -146,10 +164,10 @@ textarea[name="event"] {
   margin-right: auto;
   margin-bottom: 5px;
   height: 40px;
-  border-color: blue;
+  border-color: #83b5f8;
   border-radius: 30px;
-  background-color: lightskyblue;
-  color: blue;
+  background-color: powderblue;
+  color: #83b5f8;
   font-weight: bold;
 }
 
@@ -157,9 +175,9 @@ textarea[name="event"] {
   transition-property: color, background-color, border-color, box-shadow, transform;
   transition-duration: .2s;
   transition-timing-function: ease-in;
-  color: lightskyblue;
-  background-color: blue;
-  border-color: lightskyblue;
+  color: powderblue;
+  background-color: #83b5f8;
+  border-color: powderblue;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   transform: translateY(-2px);
 }
@@ -205,10 +223,10 @@ textarea[name="event"] {
   margin-bottom: 5px;
   margin-top: 5px;
   height: 40px;
-  border-color: blue;
+  border-color: #83b5f8;
   border-radius: 30px;
-  background-color: lightskyblue;
-  color: blue;
+  background-color: powderblue;
+  color: #83b5f8;
   font-weight: bold;
 }
 
@@ -216,9 +234,9 @@ textarea[name="event"] {
   transition-property: color, background-color, border-color, box-shadow, transform;
   transition-duration: .2s;
   transition-timing-function: ease-in;
-  color: lightskyblue;
-  background-color: blue;
-  border-color: lightskyblue;
+  color: powderblue;
+  background-color: #83b5f8;
+  border-color: powderblue;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   transform: translateY(-4px);
 }
@@ -244,10 +262,10 @@ textarea[name="event"] {
 }
 
 .sadness, #sadness {
-  border: 2px solid lightskyblue;
+  border: 2px solid blue;
   border-radius: 30px;
   text-align: center;
-  color: lightskyblue;
+  color: blue;
 }
 .sadness:hover, #sadness:hover{
   transition-property: color, background-color;
@@ -362,8 +380,8 @@ textarea[name="event"] {
   transition-property: color, background-color;
   transition-duration: .3s;
   transition-timing-function: ease-in;
-  color: gray;
-  background-color: #b8f3f5;
+  color: #83b5f8;
+  background-color: powderblue;
 }
 
 .no-emotion {
