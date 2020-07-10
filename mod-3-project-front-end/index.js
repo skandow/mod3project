@@ -75,7 +75,6 @@ function sortUserData(data) {
     buttonToCreateLog.setAttribute("data-user-id", data.data.id)
     document.getElementById("log-out").style.display = "block"
     const logsArray = data.included
-    console.log(logsArray)
     if (logsArray.length !== 0) {
     renderDailyLogs(logsArray)
     } else {
@@ -101,7 +100,7 @@ function saveDailyLog(event) {
       body: JSON.stringify({status: "complete"})
   }
   dailyLogBox.style.display = "none";
-  ulToClear.innerHTML = `Today's Log:<br><br>`
+  ulToClear.innerHTML = `<br><br>`
   newCreateButton.style.display = "block";
   fetch(url, reqObj)
   .then(resp => resp.json())
@@ -162,7 +161,8 @@ function renderOldLogs(dailylogs) {
     document.getElementById("footer").style.display = "block"
     document.getElementById("log-in").style.display = "none"
     document.getElementById("prompt").style.display = "none"
-  addDropDownEvent()
+  addDropDownEvent();
+  calculateAnalytics()
 }
 
 function addDropDownEvent(){
@@ -180,6 +180,8 @@ function showLogCard(event) {
     cards[i].style.display = "none"
   }
   card.style.display = "block"
+  document.getElementById("analytics").style.float = ""
+  document.getElementById("analytics").style.display = "inline-block"
 }
 
 function renderOldEvents(events) {
@@ -405,11 +407,12 @@ function renderNewEvent(data) {
     <input type="submit">
     </form><br><br></li>`;
     renderButtons();
+    calculateAnalytics();
 }
 
 function renderEditedEventData(data, eventTarget) {
     eventTarget.parentNode.className = `${data.attributes.emotion}`
-    eventTarget.parentNode.innerHTML = `<hr style="width:25%;margin-left:0">Event: ${data.attributes.content}<br>
+    eventTarget.parentNode.innerHTML = `Event: ${data.attributes.content}<br>
     Emotion: ${data.attributes.emotion}<br>
     <button class="edit">Edit</button>
     <button class="delete">Delete</button>
@@ -428,6 +431,7 @@ function renderEditedEventData(data, eventTarget) {
     <input type="submit" class="btn btn-primary"></input>
     </form><br><br>`
     renderButtons();
+    calculateAnalytics()
 }
 
 function deleteEvent(event) {
@@ -435,5 +439,32 @@ function deleteEvent(event) {
     const url = "http://localhost:3000/events" + "/" + id
     fetch(url, {method: "DELETE"})
     .then(resp => resp.json())
-    .then(json => event.target.parentNode.remove())
+    .then(json => renderDelete(event.target))
+}
+
+function renderDelete(event) {
+    event.parentNode.remove();
+    calculateAnalytics()
+}
+
+function calculateAnalytics() {
+    const data = []
+    data.push(document.getElementsByClassName("joy").length)
+    data.push(document.getElementsByClassName("sadness").length)
+    data.push(document.getElementsByClassName("anger").length)
+    data.push(document.getElementsByClassName("disgust").length)
+    data.push(document.getElementsByClassName("fear").length)
+    data.push(document.getElementsByClassName("surprise").length)
+    renderAnalytics(data)
+}
+
+function renderAnalytics(data) {
+    const analytics = document.getElementById("data")
+    analytics.innerHTML = ""
+    analytics.innerHTML += `<li id="joy">Number of events of joy: ${data[0]}</li>
+    <li id="sadness">Number of events of sadness: ${data[1]}</li>
+    <li id="anger">Number of events of anger: ${data[2]}</li>
+    <li id="disgust">Number of events of disgust: ${data[3]}</li>
+    <li id="fear">Number of events of fear: ${data[4]}</li>
+    <li id="surprise">Number of events of surprise: ${data[5]}</li>`
 }
