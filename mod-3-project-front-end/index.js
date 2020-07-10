@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", renderPage)
 
 function renderPage() {
     userLogInEventSetter();
-    userLogOutEventSetter()
+    userLogOutEventSetter();
     createDailyLog();
     // toggleForm();
     const saveButton = document.getElementById("complete-log")
     const form = document.getElementById("daily-log-form")
     form.addEventListener("submit", submitEvent)
     saveButton.addEventListener("click", saveDailyLog)
-    searchForLoggedInUser()
+    searchForLoggedInUser();
 }
 
 function userLogOutEventSetter() {
@@ -33,6 +33,7 @@ function logOutNow() {
     fetch(`http://localhost:3000/users/${userId}`, reqObj)
     .then(resp => resp.json())
     .then(json => location.reload())
+
 }
 
 function searchForLoggedInUser() {
@@ -256,9 +257,10 @@ function checkDailyLogs(data, id) {
     if (compareDate === data[data.length - 1].attributes.title) {
         const greeting = document.querySelector("header")
         greeting.innerHTML += `<hr><p style="color:red">You have already submitted a log for today.</p>`
+        userLogOutEventSetter();
     } else {
         postDailyLog(id)
-    } 
+    }
 }   else {
     postDailyLog(id)
 }
